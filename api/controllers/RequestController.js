@@ -5,6 +5,15 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var Paypal = require('paypal-adaptive');
+
+var paypalSdk = new Paypal({
+  userId: 'random2309_api1.gmail.com',
+  password: '4MC3BXMGG8AAGQYH',
+  signature: 'AOj63B.t.bPLJd4KaomIXlYxGQkyAoWZooZ1k8kGH1dHKinEmntcPcjB',
+  sandbox: true //defaults to false
+});
+
 module.exports = {
 	ping: function(req, res) {
 		// console.info(req.params);
@@ -37,6 +46,54 @@ module.exports = {
 					}
 				}
 
+			});
+    });
+	},
+	pay: function(req, res) {
+		Request.findOne(req.param("id")).exec(function(err, theRequest) {
+			if (!theRequest) return res.send(false);
+			if (!theRequest.responder_id) return res.send(false);
+			if ((theRequest.paymentSuggested || 0) === 0) return res.send(false);
+
+			// find user.id == theRequest.responder_id if not null
+			User.findOne(theRequest.responder_id).exec(function(err, theUser) {
+				var payload = {
+			    requestEnvelope: {
+		        errorLanguage:  'en_US'
+			    },
+			    actionType:     'PAY',
+			    currencyCode:   'EUR',
+			    feesPayer:      'EACHRECEIVER',
+			    memo:           'LOCALHERO: '+theRequest.title,
+			    cancelUrl:      'http://test.com/cancel',
+			    returnUrl:      'http://test.com/success',
+			    receiverList: {
+		        receiver: [
+	            // {
+	            //     email:  'primary@test.com',
+	            //     amount: '100.00',
+	            //     primary:'true'
+	            // },
+	            {
+                email:  theUser.email,
+                amount: theRequest.paymentSuggested,
+                primary:'false'
+	            }
+		        ]
+			    }
+				};
+
+				paypalSdk.pay(payload, function (err, response) {
+			    if (err) {
+		        console.log(err);
+			    } else {
+		        // Response will have the original Paypal API response
+		        console.log(response);
+		        // But also a paymentApprovalUrl, so you can redirect the sender to checkout easily
+		        console.log('Redirect to %s', response.paymentApprovalUrl);
+						res.send(response.paymentApprovalUrl);
+			    }
+				});
 			});
     });
 	}
