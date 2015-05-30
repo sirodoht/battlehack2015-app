@@ -46,6 +46,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /ping/:id': 'RequestController.ping'
+  'get /ping/:id': 'RequestController.ping',
+  'get /pay/:id': 'RequestController.pay'
 
 };
