@@ -31,6 +31,7 @@ module.exports = {
 							var curAbility = curUser.abilities[k];
 							if (theRequest.abilities[i] === curAbility) {
 								console.info('Found common abilities!', theRequest.abilities[i], curAbility);
+								userIds.push(curUser.id);
 							}
 						}
 					}
