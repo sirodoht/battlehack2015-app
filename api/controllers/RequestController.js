@@ -15,6 +15,12 @@ module.exports = {
 
 			var userIds = [];
 
+			// Get all users
+			// Loop users
+			//  and find the ones that match
+			//  loop ( abil as theRequest.abilities )
+			//    loop ( users )
+			//      if abil in users.abilities userIds.push(user.id)
 			User.find().exec(function(err, allUsers) {
 				// console.info(allUsers);
 				// console.log(theRequest.abilities);
@@ -31,12 +37,6 @@ module.exports = {
 				}
 
 			});
-			// Get all users
-			// Loop users
-			//  and find the ones that match
-			//  loop ( abil as theRequest.abilities )
-			//    loop ( users )
-			//      if abil in users.abilities userIds.push(user.id)
     });
 	}
 };
