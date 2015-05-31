@@ -65,8 +65,8 @@ module.exports = {
 			    currencyCode:   'EUR',
 			    feesPayer:      'EACHRECEIVER',
 			    memo:           'LOCALHERO: '+theRequest.title,
-			    cancelUrl:      'file:///android_asset/www/index.html#/login',
-			    returnUrl:      'file:///android_asset/www/index.html#/login',
+			    cancelUrl:      'http://localhost/#tab/requests',
+			    returnUrl:      'http://localhost/#tab/requests',
 			    receiverList: {
 		        receiver: [
 	            // {
