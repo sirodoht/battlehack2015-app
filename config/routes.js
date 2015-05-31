@@ -47,6 +47,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   'get /ping/:id': 'RequestController.ping',
-  'get /pay/:id': 'RequestController.pay'
+  'get /pay/:id': 'RequestController.pay',
+  '/stack': {
+    view: 'stack'
+  }
 
 };
