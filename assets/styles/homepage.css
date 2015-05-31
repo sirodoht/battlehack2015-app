@@ -266,7 +266,7 @@ div.links {
   background-color: #f3f5f7;
   border: 1px solid #ebebeb;
   padding: 25px 45px 35px;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
 }
 
 div.links h3 {
@@ -280,7 +280,7 @@ div.links h4 {
   color: #727272;
   font-size: 17px;
   font-weight: 600;
-  padding: 15px 0 10px;
+  padding: 5px 0 5px;
 }
 
 div.links .link-list a {
