@@ -15,6 +15,14 @@ var paypalSdk = new Paypal({
   sandbox: true //defaults to false
 });
 
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+  appId: '122461',
+  key: '8a9e606710e8dd107578',
+  secret: '5c1a53a6b0360e0f2a06',
+});
+
 module.exports = {
 	ping: function(req, res) {
 		// console.info(req.params);
@@ -48,6 +56,8 @@ module.exports = {
 						}
 					}
 				}
+
+        pusher.trigger(userIds, 'ping', theRequest);
 
         // sendgrid.send({
         //   to:       userIds,
