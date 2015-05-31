@@ -5,6 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+// var sendgrid  = require('sendgrid')(api_user, api_key);
 var Paypal = require('paypal-adaptive');
 
 var paypalSdk = new Paypal({
@@ -24,6 +25,7 @@ module.exports = {
 
 			var userIds = [];
 
+      var owner;
 			// Get all users
 			// Loop users
 			//  and find the ones that match
@@ -36,15 +38,26 @@ module.exports = {
 				for (var i = 0; i < theRequest.abilities.length; i++) {
 					for (var j = 0; j < allUsers.length; j++) {
 						var curUser = allUsers[j];
+            if (theRequest.user_id==curUser.id) owner = curUser;
 						for (var k = 0; k < curUser.abilities.length; k++) {
 							var curAbility = curUser.abilities[k];
 							if (theRequest.abilities[i] === curAbility) {
 								console.info('Found common abilities!', theRequest.abilities[i], curAbility);
-								userIds.push(curUser.id);
+								userIds.push(curUser.email);
 							}
 						}
 					}
 				}
+
+        // sendgrid.send({
+        //   to:       userIds,
+        //   from:     'no-reply@localhero.xzy',
+        //   subject:  'Local Hero: Someone needs your help.',
+        //   text:     'Hey Hero!\n'+owner.name+' needs help.\nSubject: '+theRequest+'\nDetails: '+theRequest.details
+        // }, function(err, json) {
+        //   if (err) { return console.error(err); }
+        //   console.log(json);
+        // });
 
 			});
     });
